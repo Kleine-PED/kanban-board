@@ -18,8 +18,18 @@ function Task({ taskIndex, colIndex }) {
       completed++;
     }
   });
+
+  const handleOnDrag = (e) => {
+    e.dataTransfer.setData(
+      "text",
+      JSON.stringify({ taskIndex, prevColIndex: colIndex })
+    );
+  };
+
   return (
     <div
+      onDragStart={handleOnDrag}
+      draggable
       onClick={() => {
         setIsTaskModalOpen(true);
       }}
