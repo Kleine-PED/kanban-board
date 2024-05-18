@@ -15,7 +15,7 @@ function App() {
     dispatch(boardsSlice.actions.setBoardActive({ index: 0 }));
   }
 
-  const [boardModalOpen, setBoardModalOpen] = useState(false);
+  const [isBoardModalOpen, setIsBoardModalOpen] = useState(false);
 
   return (
     <div className="overflow-hidden overflow-x-scroll">
@@ -24,13 +24,13 @@ function App() {
           <>
             {/* Header Section */}
             <Header
-              boardModalOpen={boardModalOpen}
-              setBoardModalOpen={setBoardModalOpen}
+              isBoardModalOpen={isBoardModalOpen}
+              setIsBoardModalOpen={setIsBoardModalOpen}
             />
             {/* Center Section */}
             <Center
-              boardModalOpen={boardModalOpen}
-              setBoardModalOpen={setBoardModalOpen}
+              isBoardModalOpen={isBoardModalOpen}
+              setIsBoardModalOpen={setIsBoardModalOpen}
             />
           </>
         ) : (

@@ -1,4 +1,3 @@
-import { indexOf } from "lodash";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import elipsisIcon from "../assets/icon-vertical-ellipsis.svg";
@@ -8,14 +7,8 @@ import boardsSlice from "../redux/boardSlice";
 import DeleteModal from "./DeleteModal";
 import AddEditTaskModal from "./AddEditTaskModal";
 
-function TaskModal({
-  colIndex,
-  taskIndex,
-  setIsTaskModalOpen,
-  setOpenAddEditTask,
-}) {
+function TaskModal({ colIndex, taskIndex, setIsTaskModalOpen }) {
   const dispatch = useDispatch();
-
   const boards = useSelector((state) => state.boards);
   const board = boards.find((board) => board.isActive === true);
   const columns = board.columns;
@@ -42,15 +35,9 @@ function TaskModal({
   };
 
   const handleOnClose = (e) => {
-    console.log("Clicked outside modal");
-    console.log("e.target:", e.target);
-    console.log("e.currentTarget:", e.currentTarget);
-
     if (e.target !== e.currentTarget) {
-      console.log("Clicked on an element inside modal, returning early");
       return;
     }
-    console.log("Clicked outside modal, closing modal");
     dispatch(
       boardsSlice.actions.setTaskStatus({
         taskIndex,
@@ -101,7 +88,7 @@ function TaskModal({
             <ElipsisMenu
               setOpenEditModal={setOpenEditModal}
               setOpenDeleteModal={setOpenDeleteModal}
-              type="task"
+              type="Task"
             />
           )}
         </div>

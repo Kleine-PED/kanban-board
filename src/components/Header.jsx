@@ -10,20 +10,22 @@ import AddEditTaskModal from "../modals/AddEditTaskModal";
 import ElipsisMenu from "./ElipsisMenu";
 import DeleteModal from "../modals/DeleteModal";
 import boardsSlice from "../redux/boardSlice";
-function Header({ setBoardModalOpen, boardModalOpen }) {
+function Header({ setIsBoardModalOpen, isBoardModalOpen }) {
   const dispatch = useDispatch();
 
   const [openDropdown, setOpenDropdown] = useState(false);
-  const [openAddEditTask, setOpenAddEditTask] = useState(false);
+
   const [isElipsisIsOpen, setIsElipsisIsOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
   const [boardType, setBoardType] = useState("add");
 
   const boards = useSelector((state) => state.boards);
   const board = boards.find((board) => board.isActive);
 
   const setOpenEditModal = () => {
-    setBoardModalOpen(true);
+    setIsBoardModalOpen(true);
     setIsElipsisIsOpen(false);
   };
   const setOpenDeleteModal = () => {
@@ -70,7 +72,7 @@ function Header({ setBoardModalOpen, boardModalOpen }) {
           <button
             className="button hidden md:block"
             onClick={() => {
-              setOpenAddEditTask((state) => !state);
+              setIsTaskModalOpen((state) => !state);
             }}
           >
             + Add New Task
@@ -79,7 +81,7 @@ function Header({ setBoardModalOpen, boardModalOpen }) {
           <button
             className="button py-1 px-3 md:hidden"
             onClick={() => {
-              setOpenAddEditTask((state) => !state);
+              setIsTaskModalOpen((state) => !state);
             }}
           >
             +
@@ -107,21 +109,21 @@ function Header({ setBoardModalOpen, boardModalOpen }) {
       {openDropdown && (
         <HeaderDropdown
           setOpenDropdown={setOpenDropdown}
-          setBoardModalOpen={setBoardModalOpen}
+          setIsBoardModalOpen={setIsBoardModalOpen}
         />
       )}
-      {boardModalOpen && (
+      {isBoardModalOpen && (
         <AddEditBoardModal
-          setBoardModalOpen={setBoardModalOpen}
+          setIsBoardModalOpen={setIsBoardModalOpen}
           type={boardType}
         />
       )}
 
-      {openAddEditTask && (
+      {isTaskModalOpen && (
         <AddEditTaskModal
           device="mobile"
           type="add"
-          setOpenAddEditTask={setOpenAddEditTask}
+          setIsAddTaskModalOpen={setIsTaskModalOpen}
         />
       )}
       {isDeleteModalOpen && (

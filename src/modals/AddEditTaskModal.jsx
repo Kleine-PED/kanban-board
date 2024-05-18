@@ -16,20 +16,18 @@ function AddEditTaskModal({
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isValid, setIsValid] = useState(true);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   const board = useSelector((state) => state.boards).find(
     (board) => board.isActive
   );
 
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const columns = board.columns;
   const col = columns.find((col, index) => index === prevColIndex);
-
   const task = col ? col.tasks.find((task, idx) => idx === taskIndex) : [];
 
   const [status, setStatus] = useState(columns[prevColIndex].name);
   const [newColIndex, setNewColIndex] = useState(prevColIndex);
-
   const [subtasks, setSubtasks] = useState([
     { title: "", isCompleted: false, id: uuidv4() },
     { title: "", isCompleted: false, id: uuidv4() },
@@ -47,8 +45,8 @@ function AddEditTaskModal({
   }
 
   const onChange = (id, newValue) => {
-    setSubtasks((pervState) => {
-      const newState = [...pervState];
+    setSubtasks((prevState) => {
+      const newState = [...prevState];
       const subtask = newState.find((subtask) => subtask.id === id);
       subtask.title = newValue;
       return newState;
@@ -216,6 +214,7 @@ function AddEditTaskModal({
               if (isValid) {
                 onSubmit(type);
                 setIsAddTaskModalOpen(false);
+                type === "edit" && setIsTaskModalOpen(false);
               }
             }}
           >
