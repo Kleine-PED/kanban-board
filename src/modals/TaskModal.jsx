@@ -7,12 +7,7 @@ import boardsSlice from "../redux/boardSlice";
 import DeleteModal from "./DeleteModal";
 import AddEditTaskModal from "./AddEditTaskModal";
 import store from "../redux/store";
-function TaskModal({
-  colIndex,
-  taskIndex,
-  setIsTaskModalOpen,
-  isTaskModalOpen,
-}) {
+function TaskModal({ colIndex, taskIndex, setIsTaskModalOpen }) {
   const dispatch = useDispatch();
   const boards = useSelector((state) => state.boards);
   const board = boards.find((board) => board.isActive === true);
@@ -33,25 +28,19 @@ function TaskModal({
   const [elipsisMenuOpen, setElipsisMenuOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
-  useEffect(() => {
-    console.log("Modal component re-rendered");
-  });
+
   const handleOnChange = (e) => {
     setStatus(e.target.value);
     setNewColIndex(e.target.selectedIndex);
   };
 
   const handleOnClose = (e) => {
-    console.log("Clicked element:", e.target);
-    console.log("Current target:", e.currentTarget);
     if (e.target !== e.currentTarget) {
-      console.log("Click inside modal, not closing.");
       return;
     }
-    console.log("Closing modal");
 
-    // Perform the dispatch action
-    console.log("State before dispatch:", store.getState());
+    setIsTaskModalOpen(false);
+
     dispatch(
       boardsSlice.actions.setTaskStatus({
         taskIndex,
@@ -60,12 +49,6 @@ function TaskModal({
         status,
       })
     );
-    console.log("State after dispatch:", store.getState());
-
-    // Close the modal
-    console.log("Closing modal, setting isTaskModalOpen to false");
-    setIsTaskModalOpen(false);
-    console.log("Modal should be closed now, isTaskModalOpen:", false);
   };
 
   const onDeleteBtnClick = (e) => {
@@ -159,6 +142,7 @@ function TaskModal({
         <DeleteModal
           setIsDeleteModalOpen={setIsDeleteModalOpen}
           onDeleteBtnClick={onDeleteBtnClick}
+          setIsTaskModalOpen={setIsTaskModalOpen}
           title={task.title}
           type="task"
         />
