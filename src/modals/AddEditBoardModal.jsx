@@ -4,7 +4,7 @@ import crossIcon from "../assets/icon-cross.svg";
 import { useDispatch, useSelector } from "react-redux";
 import boardSlices from "../redux/boardSlice";
 
-function AddEditBoardModal({ setBoardModalOpen, type }) {
+function AddEditBoardModal({ setIsBoardModalOpen, type }) {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [isFirstLoad, setIsFirstLoad] = useState(true);
@@ -15,8 +15,8 @@ function AddEditBoardModal({ setBoardModalOpen, type }) {
   );
 
   const [newColumns, setNewColumns] = useState([
-    { name: "Todo", task: [], id: uuidv4() },
-    { name: "Doing", task: [], id: uuidv4() },
+    { name: "Todo", tasks: [], id: uuidv4() },
+    { name: "Doing", tasks: [], id: uuidv4() },
   ]);
 
   if (type === "edit" && isFirstLoad) {
@@ -30,8 +30,8 @@ function AddEditBoardModal({ setBoardModalOpen, type }) {
   }
 
   const onChange = (id, newValue) => {
-    setNewColumns((pervState) => {
-      const newState = [...pervState];
+    setNewColumns((prevState) => {
+      const newState = [...prevState];
       const column = newState.find((col) => col.id === id);
       column.name = newValue;
       return newState;
@@ -39,11 +39,11 @@ function AddEditBoardModal({ setBoardModalOpen, type }) {
   };
 
   const onDelete = (id) => {
-    setNewColumns((perState) => perState.filter((item) => item.id !== id));
+    setNewColumns((prevState) => prevState.filter((item) => item.id !== id));
   };
 
   const onSubmit = (type) => {
-    setBoardModalOpen(false);
+    setIsBoardModalOpen(false);
     if (type === "add") {
       dispatch(boardSlices.actions.addBoard({ name, newColumns }));
     } else {
@@ -74,7 +74,7 @@ function AddEditBoardModal({ setBoardModalOpen, type }) {
         if (e.target !== e.currentTarget) {
           return;
         }
-        setBoardModalOpen(false);
+        setIsBoardModalOpen(false);
       }}
     >
       {/* Modal Section */}
@@ -135,7 +135,7 @@ function AddEditBoardModal({ setBoardModalOpen, type }) {
             onClick={() => {
               setNewColumns((state) => [
                 ...state,
-                { name: "", task: [], id: uuidv4() },
+                { name: "", tasks: [], id: uuidv4() },
               ]);
             }}
           >

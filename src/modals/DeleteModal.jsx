@@ -1,5 +1,4 @@
 import React from "react";
-import boardsSlice from "../redux/boardSlice";
 
 export default function DeleteModal({
   type,
@@ -9,7 +8,7 @@ export default function DeleteModal({
 }) {
   return (
     <div
-      className="fixed right-0 bottom-0 left-0 top-0 px-2 py-4 overflow-scroll scrollbar-hide z-50 justify-center items-center flex bg-[#00000080]"
+      className="fixed right-0 bottom-0 left-0 top-0 px-2 py-4 overflow-scroll scrollbar-hide  justify-center items-center flex dropdown"
       onClick={(e) => {
         if (e.target !== e.currentTarget) {
           return;

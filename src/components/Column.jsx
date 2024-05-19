@@ -18,7 +18,7 @@ function Column({ colIndex }) {
 
   const dispatch = useDispatch();
   const boards = useSelector((state) => state.boards);
-  const board = boards.find((board) => board.isActive);
+  const board = boards.find((board) => board.isActive === true);
   const col = board.columns.find((col, idx) => idx === colIndex);
 
   useEffect(() => {
@@ -48,7 +48,7 @@ function Column({ colIndex }) {
     >
       <p className=" font-semibold flex items-center gap-2 tracking-widest md:tracking-[.2em] text-[#828fa3]">
         <span className={`rounded-full w-4 h-4 ${color}`} />
-        {col.name} ({col.tasks.length})
+        {col.name}({col.tasks.length})
       </p>
       {col.tasks.map((task, index) => (
         <Task key={index} taskIndex={index} colIndex={colIndex} />
