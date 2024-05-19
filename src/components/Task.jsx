@@ -10,12 +10,6 @@ function Task({ taskIndex, colIndex }) {
 
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
 
-  useEffect(() => {
-    console.log("isTaskModalOpen changed:", isTaskModalOpen);
-  }, [isTaskModalOpen]);
-  useEffect(() => {
-    console.log("Modal component re-rendered");
-  });
   let completed = 0;
   let subtasks = task.subtasks;
   subtasks.forEach((subtask) => {
@@ -31,15 +25,18 @@ function Task({ taskIndex, colIndex }) {
     );
   };
 
+  const handleOnClick = () => {
+    setIsTaskModalOpen(true);
+  };
+
   return (
-    <div
-      onClick={() => {
-        setIsTaskModalOpen(true);
-      }}
-      onDragStart={handleOnDrag}
-      draggable
-    >
-      <div className="w-[280px] first:my-5 rounded-lg bg-white dark:bg-[#2b2c37] shadow-[#364e7e1a] py-6 px-3 shadow-lg hover:text-[#4566e8] cursor-pointer dark:text-white">
+    <div>
+      <div
+        className="w-[280px] first:my-5 rounded-lg bg-white dark:bg-[#2b2c37] shadow-[#364e7e1a] py-6 px-3 shadow-lg hover:text-[#4566e8] cursor-pointer dark:text-white"
+        onClick={handleOnClick}
+        onDragStart={handleOnDrag}
+        draggable
+      >
         <p className="font-bold tracking-wide">{task.title}</p>
         <p className="font-bold text-xs tracking-lighter mt-2 text-gray-500">
           {completed} of {subtasks.length}completed tasks
