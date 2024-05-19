@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import elipsisIcon from "../assets/icon-vertical-ellipsis.svg";
 import ElipsisMenu from "../components/ElipsisMenu";
@@ -6,8 +6,13 @@ import Subtask from "../components/Subtask";
 import boardsSlice from "../redux/boardSlice";
 import DeleteModal from "./DeleteModal";
 import AddEditTaskModal from "./AddEditTaskModal";
-
-function TaskModal({ colIndex, taskIndex, setIsTaskModalOpen }) {
+import store from "../redux/store";
+function TaskModal({
+  colIndex,
+  taskIndex,
+  setIsTaskModalOpen,
+  isTaskModalOpen,
+}) {
   const dispatch = useDispatch();
   const boards = useSelector((state) => state.boards);
   const board = boards.find((board) => board.isActive === true);
@@ -28,16 +33,25 @@ function TaskModal({ colIndex, taskIndex, setIsTaskModalOpen }) {
   const [elipsisMenuOpen, setElipsisMenuOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
-
+  useEffect(() => {
+    console.log("Modal component re-rendered");
+  });
   const handleOnChange = (e) => {
     setStatus(e.target.value);
     setNewColIndex(e.target.selectedIndex);
   };
 
   const handleOnClose = (e) => {
+    console.log("Clicked element:", e.target);
+    console.log("Current target:", e.currentTarget);
     if (e.target !== e.currentTarget) {
+      console.log("Click inside modal, not closing.");
       return;
     }
+    console.log("Closing modal");
+
+    // Perform the dispatch action
+    console.log("State before dispatch:", store.getState());
     dispatch(
       boardsSlice.actions.setTaskStatus({
         taskIndex,
@@ -46,7 +60,12 @@ function TaskModal({ colIndex, taskIndex, setIsTaskModalOpen }) {
         status,
       })
     );
+    console.log("State after dispatch:", store.getState());
+
+    // Close the modal
+    console.log("Closing modal, setting isTaskModalOpen to false");
     setIsTaskModalOpen(false);
+    console.log("Modal should be closed now, isTaskModalOpen:", false);
   };
 
   const onDeleteBtnClick = (e) => {
@@ -73,7 +92,13 @@ function TaskModal({ colIndex, taskIndex, setIsTaskModalOpen }) {
       onClick={handleOnClose}
     >
       {/* Modal Section */}
-      <div className="scrollbar-hide overflow-y-scroll max-h-[95vh] my-auto bg-white dark:bg-[#2b2c37] text-black dark:text-white font-bold shadow-md shadow-[#364e7e1a] max-w-md mx-auto w-full px-8 py-8 rounded-xl">
+      <div
+        className="scrollbar-hide overflow-y-scroll max-h-[95vh] my-auto bg-white dark:bg-[#2b2c37] text-black dark:text-white font-bold shadow-md shadow-[#364e7e1a] max-w-md mx-auto w-full px-8 py-8 rounded-xl"
+        onClick={(e) => {
+          e.stopPropagation();
+          console.log("Clicked inside modal content");
+        }}
+      >
         <div className="relative flex justify-between w-full items-center">
           <h1 className="text-lg dark:text-white">{task.title}</h1>
           <img
@@ -143,7 +168,6 @@ function TaskModal({ colIndex, taskIndex, setIsTaskModalOpen }) {
           type="edit"
           taskIndex={taskIndex}
           prevColIndex={colIndex}
-          setIsTaskModalOpen={setIsTaskModalOpen}
           setIsAddTaskModalOpen={setIsAddTaskModalOpen}
         />
       )}

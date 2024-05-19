@@ -6,7 +6,6 @@ import boardsSlice from "../redux/boardSlice";
 function AddEditTaskModal({
   type,
   device,
-  setIsTaskModalOpen,
   setIsAddTaskModalOpen,
   prevColIndex = 0,
   taskIndex,
@@ -214,7 +213,7 @@ function AddEditTaskModal({
               if (isValid) {
                 onSubmit(type);
                 setIsAddTaskModalOpen(false);
-                type === "edit" && setIsTaskModalOpen(false);
+                type === "edit" && setIsAddTaskModalOpen(false);
               }
             }}
           >
