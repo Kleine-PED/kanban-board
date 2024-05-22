@@ -1,8 +1,21 @@
-# React + Vite
+# KANBAN task management web app
+A fully-functional task management app with a light/dark mode toggle.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+------------------------------------
+This is a solution to the [Kanban task management web app](https://www.frontendmentor.io/challenges/kanban-task-management-web-app-wgQLt-HlbB)
 
-Currently, two official plugins are available:
+## Tech
+Project is created with: React , Redux and Tailwind CSS
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+Users should be able to:
+- View the optimal layout for the app depending on their device's screen size
+- Create, read, update, and delete boards and tasks
+- Mark subtasks as complete and move tasks between columns
+- Hide/show the board sidebar
+- Toggle the theme between light/dark modes
+- Allow users to drag and drop tasks to change their status and re-order them in a column
+
+
+### 👉🏼[Click here for Preview](https://kanban-board-omega-navy.vercel.app/)
+
